@@ -172,6 +172,11 @@ if (webfile === null || webfile === 'free'){
 }
 
 const web = http.createServer( (request, response) => {
+    if (path.normalize(decodeURL(request.url)) !== decodeURL(request.url)) {
+        response.statusCode = 403;
+        response.end();
+        return;
+    }
   if (request.method =='POST'){
     console.log("post received");
     var uri = url.parse(request.url).pathname
